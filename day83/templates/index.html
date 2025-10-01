@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="hero">
+  <div class="hero-left">
+    <h1>Hi, I'm <span class="accent">Sarvesh Singh</span></h1>
+    <p class="role">Python Developer • Flask • ML Enthusiast</p>
+    <p> I build small web apps, automation scripts and GUIs. I love writing clean code and learning new technologies.</p>
+    <a class="btn" href="/projects">View Projects</a>
+  </div>
+  <div class="hero-right">
+    <img alt="Your Photo" src="{{ url_for('static', filename='images/profile.png') }}">
+  </div>
+</section>
+
+<section class="skills">
+  <h2>Skills</h2>
+  <div class="skill-list">
+    <div class="skill">Python</div>
+    <div class="skill">Flask</div>
+    <div class="skill">HTML & CSS</div>
+    <div class="skill">SQL</div>
+    <div class="skill">Git</div>
+    <div class="skill">C++</div>
+    <div class="skill">C</div>
+  </div>
+</section>
+
+<section class="featured">
+  <h2>Featured Projects</h2>
+  <div class="grid">
+    {% for p in projects %}
+      <div class="card">
+        <img src="{{ url_for('static', filename=('images/' + p.image)) }}" alt="{{ p.title }}">
+        <h3>{{ p.title }}</h3>
+        <p>{{ p.description }}</p>
+        <div class="tech">{{ ', '.join(p.tech) }}</div>
+        <a href="{{ p.link }}" class="btn small">View</a>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
