@@ -104,8 +104,7 @@ h1 {
 
 /* colored players */
 .cell.x { 
-  color: #0d47a1; /* dark royal blue */
-  text-shadow: 0 3px 8px rgba(13, 71, 161, 0.3);
+  color: #0d47a1; /* dark royal blue */ text-shadow: 0 3px 8px rgba(13, 71, 161, 0.3);
 }
 
 .cell.o { 
