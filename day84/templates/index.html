@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tic Tac Toe - Human or Computer</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>Tic Tac Toe 🎮</h1>
+      <div class="controls">
+        <label>Game Mode:
+          <select id="mode">
+            <option value="computer" selected>Vs Computer</option>
+            <option value="human">Vs Human</option>
+          </select>
+        </label>
+
+        <label id="diff-label">Difficulty:
+          <select id="difficulty">
+            <option value="easy">Easy</option>
+            <option value="standard" selected>Standard</option>
+            <option value="intermediate">Intermediate</option>
+          </select>
+        </label>
+
+        <label>Choose Symbol:
+          <select id="symbol">
+            <option value="X" selected>X (You)</option>
+            <option value="O">O (You)</option>
+          </select>
+        </label>
+
+        <button id="restart">Restart</button>
+      </div>
+
+      <div id="board" class="board"></div>
+      <div id="status" class="status"></div>
+      <div class="footer">🔥 Play Solo or with a Friend</div>
+    </div>
+  </div>
+  <script src="{{ url_for('static', filename='game.js') }}"></script>
+</body>
+</html>
