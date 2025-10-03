@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Typing Speed Test</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+  <div class="container">
+    <h1>Typing Speed Test</h1>
+
+    <div class="sentence" id="sentence">{{ sentence }}</div>
+
+    <textarea id="input" placeholder="Start typing here..." rows="5"></textarea>
+
+    <div class="results" id="results"></div>
+
+    <button id="restart" class="hidden">Restart Test</button>
+  </div>
+
+  <script>
+    let startTime = null;
+    let ended = false;
+    let sentence = document.getElementById("sentence").innerText.trim();
+    let input = document.getElementById("input");
+    let results = document.getElementById("results");
+    let restartBtn = document.getElementById("restart");
+
+    // Break the original sentence into words
+    let sentenceWords = sentence.split(/\s+/);
+    let lastWord = sentenceWords[sentenceWords.length - 1];
+
+    // 🕐 Start timer on first key press
+    input.addEventListener("keydown", () => {
+      if (!startTime) {
+        startTime = new Date();
+      }
+    });
+
+    // 🧠 Detect when the last word is typed (test completion)
+    input.addEventListener("input", () => {
+      if (ended) return;
+
+      const typed = input.value.trim();
+      const typedWords = typed.split(/\s+/);
+
+      // Check if last word is typed
+      if (typedWords.length >= sentenceWords.length) {
+        const typedLastWord = typedWords[typedWords.length - 1];
+
+        // ✅ If the typed last word length >= original last word length => finish test
+        if (typedLastWord.length >= lastWord.length) {
+          ended = true;
+          const endTime = new Date();
+          const totalTime = (endTime - startTime) / 1000;
+
+          // 📊 Calculate WPM
+          const totalWords = sentenceWords.length;
+          const minutes = totalTime / 60;
+          const wpm = (totalWords / minutes).toFixed(2);
+
+          // 🎯 Calculate Accuracy (character-based)
+          let correctChars = 0;
+          const minLen = Math.min(sentence.length, typed.length);
+          for (let i = 0; i < minLen; i++) {
+            if (typed[i] === sentence[i]) correctChars++;
+          }
+          const accuracy = ((correctChars / sentence.length) * 100).toFixed(2);
+
+          // 📈 Show results
+          results.innerHTML = `
+            <p>⏱ Time: ${totalTime.toFixed(1)}s</p>
+            <p>⚡ Speed: <b>${wpm} WPM</b></p>
+            <p>🎯 Accuracy: <b>${accuracy}%</b></p>
+          `;
+
+          input.disabled = true;
+          restartBtn.classList.remove("hidden");
+        }
+      }
+    });
+
+    // 🔁 Restart the test
+    restartBtn.addEventListener("click", async () => {
+      const res = await fetch("/new_sentence");
+      const data = await res.json();
+
+      sentence = data.sentence;
+      sentenceWords = sentence.split(/\s+/);
+      lastWord = sentenceWords[sentenceWords.length - 1];
+
+      document.getElementById("sentence").innerText = sentence;
+      input.disabled = false;
+      input.value = "";
+      results.innerHTML = "";
+      restartBtn.classList.add("hidden");
+      startTime = null;
+      ended = false;
+      input.focus();
+    });
+  </script>
+</body>
+</html>
