@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Add a New Cafe</h2>
+
+<form action="{{ url_for('add_cafe') }}" method="post" class="form">
+  <label>
+    Cafe Name *
+    <input type="text" name="name" required />
+  </label>
+
+  <label>
+    Google Map URL
+    <input type="url" name="map_url" placeholder="https://goo.gl/maps/..." />
+  </label>
+
+  <label>
+    Image URL
+    <input type="url" name="img_url" placeholder="https://picsum.photos/200" />
+  </label>
+
+  <label>
+    Location (Address / Area)
+    <input type="text" name="location" />
+  </label>
+
+  <label class="checkbox-inline">
+    <input type="checkbox" name="has_socket" /> Power Sockets Available
+  </label>
+
+  <label class="checkbox-inline">
+    <input type="checkbox" name="has_toilet" /> Has Toilet
+  </label>
+
+  <label class="checkbox-inline">
+    <input type="checkbox" name="has_wifi" /> Has WiFi
+  </label>
+
+  <label class="checkbox-inline">
+    <input type="checkbox" name="can_take_calls" /> Can Take Calls
+  </label>
+
+  <label>
+    Seats (e.g., "10-20" or "20-40")
+    <input type="text" name="seats" />
+  </label>
+
+  <label>
+    Coffee Price (e.g., "$4.50")
+    <input type="text" name="coffee_price" />
+  </label>
+
+  <div>
+    <button type="submit">Add Cafe</button>
+    <a href="{{ url_for('index') }}" class="btn-link">Cancel</a>
+  </div>
+</form>
+{% endblock %}
