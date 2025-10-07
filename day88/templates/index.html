@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>All Cafes</h2>
+
+{% if cafes|length == 0 %}
+    <p>No cafes yet. <a href="{{ url_for('add_cafe')}}">Add one</a>.</p>
+{% else %}    
+    <table class="cafes-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Location</th>
+                <th>Map</th>
+                <th>Image</th>
+                <th>Wifi</th>
+                <th>Sockets</th>
+                <th>Toilet</th>
+                <th>Can Take Calls</th>
+                <th>Seats</th>
+                <th>Coffee Price</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cafe in cafes %}
+            <tr>
+                <td>{{cafe['name']}}</td>
+                <td>{{cafe['location'] or '-'}}</td>
+
+                <td>
+                    {% if cafe['map_url'] %}
+                        <a href="{{ cafe['map_url']}}" target="blank">View Map</a>
+                    {% else %}    
+                     ---
+                    {% endif %}
+                </td>
+
+                <td>
+                    {% if cafe["img_url"] %}
+                        <img src="{{ cafe['img_url'] }}" alt="Cafe Image" width="80" style="border-radius:6px;" />
+                    {% else %}
+                        —
+                    {% endif %}
+                </td>
+
+                <td>{{ "✔" if cafe["has_wifi"] else "—" }}</td>
+                <td>{{ "✔" if cafe["has_socket"] else "—" }}</td>
+                <td>{{ "✔" if cafe["has_toilet"] else "—" }}</td>
+                <td>{{ "✔" if cafe["can_take_calls"] else "—" }}</td>
+                    
+                <td>{{ cafe["seats"] or "-" }}</td>
+                <td>{{ cafe["coffee_price"] or "-" }}</td>
+
+                <td>
+          <form action="{{ url_for('delete_cafe', cafe_id=cafe['id']) }}" method="post" onsubmit="return confirm('Delete this cafe?');">
+            <button type="submit" class="btn-delete">Delete</button>
+          </form>
+        </td>
+        
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endif %}
+{% endblock %}
