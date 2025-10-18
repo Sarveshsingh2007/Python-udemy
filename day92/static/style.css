@@ -1,0 +1,30 @@
+body {
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: #f7f8fa;
+  color: #111;
+  margin: 0;
+  padding: 20px;
+}
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  background: white;
+  padding: 22px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+}
+h1 { margin-top: 0; }
+.upload-form { display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin-bottom: 14px; }
+.file-label { padding: 8px 12px; border: 1px dashed #ccc; border-radius: 8px; cursor:pointer; }
+.file-label input { display:none; }
+.params label { margin-right:12px; font-size: 14px; }
+button { padding: 10px 14px; border-radius: 8px; border: none; background: #2b6cb0; color:white; cursor:pointer; }
+.preview img { max-width: 320px; margin-top: 8px; border-radius: 8px; border: 1px solid #eee; }
+.palette { display:flex; flex-wrap:wrap; gap:12px; margin-top: 12px; }
+.swatch { display:flex; gap:8px; background: #fafafa; padding: 8px; border-radius: 8px; align-items:center; width: 260px; }
+.color { width: 64px; height: 64px; border-radius: 8px; border: 1px solid rgba(0,0,0,0.06); }
+.meta { font-size: 13px; }
+.hex { font-weight: 600; margin-bottom: 4px; }
+.copy { margin-top: 6px; padding: 6px 8px; font-size: 13px; background: #e2e8f0; color: #111; border-radius: 6px; border: none; cursor:pointer; }
+.css pre { background: #f3f4f6; padding: 8px; border-radius: 6px; overflow:auto; }
+footer { margin-top: 18px; font-size: 13px; color: #666; }
