@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Top 10 Colours — Image Color Extractor</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h1>Image → Top Colours (Top {{ results|length if results else 10 }})</h1>
+
+    <form method="POST" enctype="multipart/form-data" class="upload-form">
+      <label class="file-label">
+        Choose image
+        <input type="file" name="image" accept="image/*" required>
+      </label>
+
+      <div class="params">
+        <label>Top N:
+          <input type="number" name="top_n" min="1" max="50" value="10">
+        </label>
+        <label>Quantize colours:
+          <input type="number" name="quantize_colors" min="8" max="256" value="64">
+        </label>
+        <label>Max dimension:
+          <input type="number" name="resize_max" min="100" max="2000" value="800">
+        </label>
+      </div>
+
+      <button type="submit">Upload and analyze</button>
+    </form>
+
+    {% if preview %}
+      <div class="preview">
+        <h3>Preview</h3>
+        <img src="{{ preview }}" alt="preview">
+      </div>
+    {% endif %}
+
+    {% if results %}
+      <div class="results">
+        <h3>Top colours</h3>
+        <div class="palette">
+          {% for c in results %}
+            <div class="swatch">
+              <div class="color" style="background: {{ c.hex }}"></div>
+              <div class="meta">
+                <div class="hex">{{ c.hex }}</div>
+                <div class="info">{{ c.percent }}% — {{ c.count }} px</div>
+                <button class="copy" data-hex="{{ c.hex }}">Copy HEX</button>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+
+        <div class="css">
+          <h4>CSS-friendly list</h4>
+          <pre>
+{% for c in results %}{{ c.hex }}{% if not loop.last %}, {% endif %}{% endfor %}
+          </pre>
+        </div>
+      </div>
+    {% endif %}
+
+    <footer>
+      <p>Made with Pillow + NumPy — quantize → count unique → present top N.</p>
+    </footer>
+  </div>
+
+<script>
+document.addEventListener('click', (e) => {
+  if (e.target.matches('.copy')) {
+    const hex = e.target.dataset.hex;
+    navigator.clipboard?.writeText(hex).then(() => {
+      e.target.textContent = 'Copied!';
+      setTimeout(()=> e.target.textContent = 'Copy HEX', 1200);
+    }).catch(()=> {
+      alert('Copy failed: ' + hex);
+    });
+  }
+});
+</script>
+</body>
+</html>
