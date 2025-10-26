@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Home - Harry Potter Explorer{% endblock %}
+{% block content %}
+
+<h1 class="text-center text-warning mb-4">Harry Potter Characters</h1>
+
+<form method="POST" class="row g-2 mb-4 justify-content-center">
+  <div class="col-auto">
+    <input type="text" name="search" class="form-control" placeholder="Search by name..." value="{{ search_query }}">
+  </div>
+  <div class="col-auto">
+    <select name="house" class="form-select">
+      <option value="">All Houses</option>
+      <option value="gryffindor" {% if house_filter=='gryffindor' %}selected{% endif %}>Gryffindor</option>
+      <option value="slytherin" {% if house_filter=='slytherin' %}selected{% endif %}>Slytherin</option>
+      <option value="ravenclaw" {% if house_filter=='ravenclaw' %}selected{% endif %}>Ravenclaw</option>
+      <option value="hufflepuff" {% if house_filter=='hufflepuff' %}selected{% endif %}>Hufflepuff</option>
+    </select>
+  </div>
+  <div class="col-auto">
+    <button class="btn btn-warning">Search</button>
+  </div>
+</form>
+
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+  {% for c in characters %}
+  <div class="col">
+    <div class="card h-100 shadow-sm">
+      <a href="/character/{{ c.name | urlencode }}" class="text-decoration-none text-reset">
+        <img src="{{ c.image or 'https://via.placeholder.com/300x400?text=No+Image' }}" 
+             class="card-img-top card-img-fixed" 
+             alt="{{ c.name }}">
+        <div class="card-body text-center">
+          <h5 class="card-title text-warning">{{ c.name }}</h5>
+          <p class="card-text"><strong>House:</strong> {{ c.house or 'Unknown' }}</p>
+        </div>
+      </a>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock %}

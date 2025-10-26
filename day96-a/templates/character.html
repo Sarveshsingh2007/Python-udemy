@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}{{ character.name }} - Harry Potter Explorer{% endblock %}
+{% block content %}
+
+<a href="/" class="btn btn-outline-warning mb-4">⬅ Back</a>
+
+<div class="card bg-black border-warning shadow-lg mx-auto" style="max-width:600px;">
+  <img src="{{ character.image or 'https://via.placeholder.com/600x800?text=No+Image' }}" 
+       class="card-img-top" 
+       alt="{{ character.name }}">
+  <div class="card-body text-center">
+    <h2 class="text-warning">{{ character.name }}</h2>
+    <p><strong>House:</strong> {{ character.house or 'Unknown' }}</p>
+    <p><strong>Actor:</strong> {{ character.actor or 'Unknown' }}</p>
+    <p><strong>Species:</strong> {{ character.species or 'Unknown' }}</p>
+    <p><strong>Ancestry:</strong> {{ character.ancestry or 'Unknown' }}</p>
+    <p><strong>Patronus:</strong> {{ character.patronus or 'Unknown' }}</p>
+    <p><strong>Gender:</strong> {{ character.gender or 'Unknown' }}</p>
+  </div>
+</div>
+
+{% endblock %}
