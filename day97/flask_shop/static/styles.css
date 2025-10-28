@@ -1,0 +1,4 @@
+/* small extra styling */
+body { font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; }
+.card { border: none; }
+.navbar-brand { font-weight: 700; letter-spacing: .6px; }
