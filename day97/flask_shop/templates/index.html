@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Home - FlaskShop{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-end mb-4">
+  <div>
+    <h1 class="display-6">Welcome to FlaskShop</h1>
+    <p class="text-muted">A demo eCommerce built with Flask + Stripe</p>
+  </div>
+  <div>
+    <a href="{{ url_for('seed') }}" class="btn btn-outline-secondary">Seed demo products</a>
+  </div>
+</div>
+
+<div class="row gy-4">
+  {% for p in products %}
+  <div class="col-md-3">
+    <div class="card h-100 shadow-sm">
+      <img src="{{ p.image }}" class="card-img-top" style="height:160px;object-fit:cover;">
+      <div class="card-body d-flex flex-column">
+        <h5 class="card-title">{{ p.title }}</h5>
+        <p class="card-text text-truncate">{{ p.description }}</p>
+        <div class="mt-auto d-flex justify-content-between align-items-center">
+          <strong>${{ '%.2f' | format(p.price_cents / 100) }}</strong>
+          <div>
+            <a href="{{ url_for('product_page', product_id=p.id) }}" class="btn btn-sm btn-outline-primary">View</a>
+            <form action="{{ url_for('add_to_cart', product_id=p.id) }}" method="post" class="d-inline">
+              <input type="hidden" name="quantity" value="1">
+              <button class="btn btn-sm btn-primary">Add</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

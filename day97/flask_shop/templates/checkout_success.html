@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="text-center">
+  <h2>Thanks for your purchase!</h2>
+  {% if order %}
+    <p class="text-muted">Order #{{ order.id }} — {% if order.paid %}<span class="text-success">Paid</span>{% else %}<span class="text-warning">Pending</span>{% endif %}</p>
+  {% endif %}
+  <a href="{{ url_for('index') }}" class="btn btn-primary">Back to shop</a>
+</div>
+{% endblock %}

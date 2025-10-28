@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block content %}
+<h3>Your cart</h3>
+
+<form method="post" action="{{ url_for('update_cart') }}">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th>Price</th>
+        <th>Qty</th>
+        <th>Subtotal</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in items %}
+      <tr>
+        <td>{{ row.product.title }}</td>
+        <td>${{ '%.2f' | format(row.product.price_cents/100) }}</td>
+        <td>
+          <input type="number" name="qty-{{ row.product.id }}" value="{{ row.qty }}" min="0" class="form-control" style="width:100px;">
+        </td>
+        <td>${{ '%.2f' | format(row.subtotal_cents/100) }}</td>
+      </tr>
+      {% endfor %}
+      {% if not items %}
+      <tr><td colspan="4" class="text-center">Your cart is empty.</td></tr>
+      {% endif %}
+    </tbody>
+  </table>
+
+  <div class="d-flex justify-content-between align-items-center">
+    <div>
+      <a href="{{ url_for('clear_cart') }}" class="btn btn-outline-danger">Clear cart</a>
+    </div>
+    <div>
+      <strong>Total: ${{ '%.2f' | format(total_cents/100) }}</strong>
+      <button class="btn btn-primary ms-3" type="submit">Update cart</button>
+    </div>
+  </div>
+</form>
+
+{% if items %}
+<div class="text-end mt-4">
+  <form action="{{ url_for('create_checkout_session') }}" method="post">
+    <button class="btn btn-success btn-lg">Checkout</button>
+  </form>
+</div>
+{% endif %}
+
+{% endblock %}
